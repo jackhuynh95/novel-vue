@@ -14,6 +14,7 @@ import { InputRule } from "@tiptap/core";
 import SlashCommand from "./slashExtension";
 import UploadImagesPlugin from "../plugins/upload-images";
 import UpdatedImage from "./updated-image";
+import EmbedLink from "./embed-link";
 
 export const defaultExtensions = [
   StarterKit.configure({
@@ -133,6 +134,12 @@ export const defaultExtensions = [
   Markdown.configure({
     html: false,
     transformCopiedText: true,
+  }),
+  EmbedLink.configure({
+    HTMLAttributes: {
+      class:
+        "relative w-full embed overflow-hidden h-auto [&:ProseMirror-selectednode]:outline-[3px] [&:ProseMirror-selectednode]:outline [&:ProseMirror-selectednode]:outline-[#68cef8] [&>iframe]:min-h-[300px] [&>iframe]:h-full [&>iframe]:w-full",
+    },
   }),
   SlashCommand,
 ];
