@@ -15,6 +15,7 @@ import {
   CheckSquare,
   Sparkles,
   Image,
+  Link,
 } from "lucide-vue-next";
 import SlashCommandList from "./slashCommandList.vue";
 import { startImageUpload } from "../plugins/upload-images";
@@ -202,6 +203,27 @@ const getSuggestionItems = ({ query }: { query: string }) => {
           }
         };
         input.click();
+      },
+    },
+    {
+      title: "Embed",
+      description: "For PDFs, Google Maps, and more.",
+      searchTerms: ["embed", "link", "iframe"],
+      icon: Link,
+      command: ({ editor, range }: CommandProps) => {
+        const url = window.prompt("Paste in https://...");
+        const expression =
+          /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+        const regex = new RegExp(expression);
+        if (url && url.match(regex))
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setIframe({
+              src: url,
+            })
+            .run();
       },
     },
   ].filter((item) => {
